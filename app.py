@@ -20,7 +20,7 @@ def close_connection(exception):
 
 @app.route('/')
 def home_page():
-    return "Hello World!"
+    return "Hi bruh!"
 
 
 

@@ -1,5 +1,5 @@
 create table contrevenant (
-  id integer primary key,
+  id integer unique primary key,
   adresse  varchar(500),
   categorie  varchar(50),
   date_infraction text,

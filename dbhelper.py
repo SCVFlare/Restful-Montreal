@@ -15,11 +15,11 @@ class Database:
             self.connection.close()
             self.connection = None
 	
-    def insert_contrevenant(self, adresse, categorie, date_infraction, date_jugement,description, etablissement, montant, proprietaire, ville):
+    def insert_contrevenant(self, id, adresse, categorie, date_infraction, date_jugement,description, etablissement, montant, proprietaire, ville):
         connection = self.get_connection()
         cursor = connection.cursor()
-        cursor.execute("insert into contrevenant(adresse, categorie, date_infraction, date_jugement,"
+        cursor.execute("insert or replace into contrevenant(id, adresse, categorie, date_infraction, date_jugement,"
                             "description, etablissement, montant, proprietaire, ville) "
-                            "values(?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-                                (adresse, categorie, date_infraction, date_jugement,description, etablissement, montant, proprietaire, ville))
+                            "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+                                (id, adresse, categorie, date_infraction, date_jugement,description, etablissement, montant, proprietaire, ville))
         connection.commit()

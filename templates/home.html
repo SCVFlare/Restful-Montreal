@@ -1,0 +1,60 @@
+{% extends "skeleton.html" %}
+{% block content %}  
+<div class="container">
+
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-8">
+
+        <h1 class="my-4">Lorem Ipsum CMS</h1>
+
+
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+
+        <!-- Search Widget -->
+        <form action="/search" method="get">
+        <div class="card my-4">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <label for="option">Choisissez un option:</label>
+
+          <select id="select" name="select">
+          <option value="etablissement">Nom d'etablissement</option>
+          <option value="adresse">Rue</option>
+          <option value="proprietaire">Proprietaire</option>
+          </select> 
+          <br>
+          <br>
+
+
+
+
+            <div class="input-group">
+			
+              <input type="text" class="form-control" placeholder="Search for..." name="search">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit" >Go!</button>
+              </span>
+			</form>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+
+{% endblock %}  

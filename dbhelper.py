@@ -38,5 +38,6 @@ class Database:
 		connection = self.get_connection()
 		cursor = connection.cursor()
 		cursor.execute("select * from contrevenant where %s like '%s'" % (attr, '%'+search+'%'))
-		items = cursor.fetchall()
-		return items
+		results = cursor.fetchall()
+		results=[Contrevenant(res[0],res[1],res[2],res[3],res[4],res[5],res[6],res[7],res[8],res[9]) for res in results]
+		return results

@@ -32,12 +32,12 @@ def home_page():
 def search():
 	attribute = request.args.get('select')
 	value = request.args.get('search')
-	items = get_db().get_data(attribute, value)
-	return render_template("search_result.html", items=items)
+	results = get_db().get_data(attribute, value)
+	return render_template("search_result.html", items=results)
 
 @app.route('/api')
 def api_page():
-	return "/api/doc for documentation"
+	return render_template("api.html")
 
 @app.route('/api/doc')
 def get_api_doc():

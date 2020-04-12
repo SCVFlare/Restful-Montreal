@@ -4,6 +4,7 @@ import dbhelper
 import locale
 import datetime as dt
 
+
 def extract_data():
 	print('doing it')
 	locale.setlocale(locale.LC_ALL, 'fr_FR')

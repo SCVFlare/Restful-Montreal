@@ -1,0 +1,49 @@
+#%RAML 1.0
+title: Donnees de contrevenant alimentaire a Montreal
+mediaType: application/json
+types:
+  Contrevenant:
+    properties:
+      id:
+        type: integer
+        required: true
+      adresse:
+        type: string
+        required: true
+      categorie:
+        type: string
+        required: true
+      date_infraction:
+        type: string
+        required: true
+      date_jugement:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      etablissement:
+        type: string
+        required: true
+      montant:
+        type: number
+        required: true
+      proprietaire:
+        type: string
+        required: true
+      ville:
+        type: string
+        required: true
+		
+
+/api:
+  /contrevenant:
+    get:
+      description: Extraction des contrevenants entre deux dates en ISO avec parametres "du" et "au".
+      responses:
+        200:
+          body:
+            application/json:
+              type: Contrevenant[]
+		400:
+			body: Invalid date format or paramater names

@@ -1,12 +1,16 @@
-from flask import Flask, render_template, url_for, g, request, redirect
+from flask import Flask, render_template, url_for, g, request, redirect, jsonify
 from dbhelper import Database
 from apscheduler.schedulers.background import BackgroundScheduler
 from extraction_donnees import extract_data
+from flask_json_schema import JsonSchema
+from flask_json_schema import JsonValidationError
+import json
+import datetime as dt
 
 app = Flask(__name__)
 sched = BackgroundScheduler()
 sched.start()
-sched.add_job(extract_data,'cron',hour=00,minute=01)
+sched.add_job(extract_data,'cron',hour=00,minute=1)
 
 
 def get_db():
@@ -25,9 +29,29 @@ def close_connection(exception):
 
 @app.route('/')
 def home_page():
-	return "Hi bruh!"
+	return "/api/doc for documentation"
+	
+@app.route('/api')
+def api_page():
+	return "/api/doc for documentation"
 
-
+@app.route('/api/contrevenant',methods=["GET"])
+def get_contrevenants():
+	try:
+		d1=request.args.get('du')
+		d2=request.args.get('au')
+		begin=dt.datetime.strptime(d1,"%Y-%m-%d")
+		end=dt.datetime.strptime(d2,"%Y-%m-%d")
+	except:
+		return "Invalid date format or paramater names", 400
+	contrevenants=get_db().get_contrevenants_by_date(begin,end)
+	contrevenants=[c.__dict__ for c in contrevenants]
+	return jsonify(contrevenants),200
+	
+@app.route('/api/doc')
+def get_api_doc():
+	return render_template("doc.html")
+		
 
 if __name__ == '__main__':
 	app.run(debug=True)

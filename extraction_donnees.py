@@ -29,3 +29,4 @@ def extract_data():
 		db.insert_contrevenant(count,adresse,categorie,date_infraction,date_jugement,description,etablissement,montant,proprietaire,ville)
 		count=count+1
 	print("done")
+

@@ -1,0 +1,13 @@
+{% extends "skeleton.html" %}
+{% block content %}  
+		<ul>
+        	{% for item in items %}
+        	<!-- Blog Post -->
+        	<div class="card mb-4">
+          	<div class="card-body">
+				    <li>{{item}}</li>
+          	</div>
+        	</div>
+        	{% endfor %}
+        </ul>
+{% endblock %}  

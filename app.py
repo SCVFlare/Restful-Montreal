@@ -12,13 +12,11 @@ sched = BackgroundScheduler()
 sched.start()
 sched.add_job(extract_data,'cron',hour=00,minute=1)
 
-
 def get_db():
 	db = getattr(g, '_database', None)
 	if db is None:
 		g._database = Database()
 	return g._database
-
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -26,14 +24,25 @@ def close_connection(exception):
 	if db is not None:
 		db.disconnect()
 
-
 @app.route('/')
 def home_page():
-	return "/api/doc for documentation"
-	
+	return render_template('home.html')
+
+@app.route('/search', methods = ["GET"])
+def search():
+	attribute = request.args.get('select')
+	value = request.args.get('search')
+	items = get_db().get_data(attribute, value)
+	return render_template("search_result.html", items=items)
+
 @app.route('/api')
 def api_page():
 	return "/api/doc for documentation"
+
+@app.route('/api/doc')
+def get_api_doc():
+	return render_template("doc.html")
+	
 
 @app.route('/api/contrevenant',methods=["GET"])
 def get_contrevenants():
@@ -47,11 +56,9 @@ def get_contrevenants():
 	contrevenants=get_db().get_contrevenants_by_date(begin,end)
 	contrevenants=[c.__dict__ for c in contrevenants]
 	return jsonify(contrevenants),200
-	
-@app.route('/api/doc')
-def get_api_doc():
-	return render_template("doc.html")
-		
 
 if __name__ == '__main__':
 	app.run(debug=True)
+
+
+

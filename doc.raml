@@ -1,8 +1,8 @@
 #%RAML 1.0
 title: Donnees de contrevenant alimentaire a Montreal
-mediaType: application/json
 types:
   Contrevenant:
+    type: object
     properties:
       id:
         type: integer
@@ -34,7 +34,36 @@ types:
       ville:
         type: string
         required: true
-		
+
+  Infraction:
+    type: object
+    properties:
+      date_infraction:
+        type: string
+        required: true
+      montant:
+        type: number
+        required: true
+      description:
+        type: string
+        required: true
+
+  Infractions:
+    type: Infraction
+    uniqueItems: true
+
+  Etablissement:
+    type: object
+    properties:
+      name:
+        type: string
+        required: true
+      nbinfractions:
+        type: integer
+        required: true
+      infractions:
+        type: Infractions
+        required: false
 
 /api:
   /contrevenant:
@@ -45,5 +74,19 @@ types:
           body:
             application/json:
               type: Contrevenant[]
-		400:
-			body: Invalid date format or paramater names
+        400:
+          description: Invalid date format or paramater names
+  /etablissement:
+    get:
+      description: Extraction des etablissements qui ont fait plus d'une infraction et montre le nombre des infractions selon le Content-Type(application/json,application/xml,text/csv). OBLIGÉ D'AVOIR SET Content-Type DANS LE HEADER!
+      responses:
+        200:
+          body:
+            application/json:
+              type: Etablissement[]	
+            application/xml:
+              type: Etablissement[]
+            text/csv:
+              type: Etablissement[]
+        400:
+          description: Invalid or no Content-Type specified

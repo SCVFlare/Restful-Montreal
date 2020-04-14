@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, g, request, redirect, jsonify
+from flask import Flask, render_template, url_for, g, request, redirect, jsonify, make_response
 from dbhelper import Database
 from apscheduler.schedulers.background import BackgroundScheduler
 from extraction_donnees import extract_data
@@ -6,6 +6,7 @@ from flask_json_schema import JsonSchema
 from flask_json_schema import JsonValidationError
 import json
 import datetime as dt
+import converter as conv
 
 app = Flask(__name__)
 sched = BackgroundScheduler()
@@ -56,6 +57,29 @@ def get_contrevenants():
 	contrevenants=get_db().get_contrevenants_by_date(begin,end)
 	contrevenants=[c.__dict__ for c in contrevenants]
 	return jsonify(contrevenants),200
+	
+@app.route('/api/etablissement',methods=["GET"])
+def get_etablissement():
+	etablissements=get_db().get_etablissement()
+	etablissements=[e.__dict__ for e in etablissements]
+	try:
+		ctype=request.headers.get('Content-Type')
+	except:
+		return "No Content-Type specified", 400
+	if ctype=="application/json":
+		res = make_response(jsonify(etablissements),200)
+		res.headers["Content-Type"]=ctype
+		return res
+	elif ctype=="application/xml":
+		res = make_response(conv.etablissement_to_xml(etablissements),200)
+		res.headers["Content-Type"]=ctype
+		return res
+	elif ctype=="text/csv":
+		res = make_response(conv.etablissement_to_csv(etablissements),200)
+		res.headers["Content-Type"]=ctype
+		return res
+	else:
+		return "Invalid Content-Type", 400
 
 if __name__ == '__main__':
 	app.run(debug=True)

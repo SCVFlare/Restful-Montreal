@@ -1,5 +1,7 @@
 import sqlite3
 from contrevenant import Contrevenant
+from etablissement import Etablissement
+from infraction import Infraction
 
 class Database:
 	def __init__(self):
@@ -41,3 +43,21 @@ class Database:
 		results = cursor.fetchall()
 		results=[Contrevenant(res[0],res[1],res[2],res[3],res[4],res[5],res[6],res[7],res[8],res[9]) for res in results]
 		return results
+		
+	def get_infractions(self,etablissement):
+		connection = self.get_connection()
+		cursor = connection.cursor()
+		cursor.execute("select date_infraction,montant,description from contrevenant where etablissement=?",(etablissement,))
+		results = cursor.fetchall()
+		infractions=[Infraction(res[0],res[1],res[2]).__dict__ for res in results]
+		return infractions
+		
+	def get_etablissement(self):
+		connection = self.get_connection()
+		cursor = connection.cursor()
+		cursor.execute("select etablissement,count(*) from contrevenant group by etablissement")
+		results = cursor.fetchall()
+		etablissements=[Etablissement(res[0],res[1],self.get_infractions(res[0])) for res in results]
+		etablissements.sort(key=lambda x:x.nbinfractions)
+		return etablissements
+		

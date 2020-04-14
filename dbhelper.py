@@ -2,6 +2,7 @@ import sqlite3
 from contrevenant import Contrevenant
 from etablissement import Etablissement
 from infraction import Infraction
+from plainte import Plainte
 
 class Database:
 	def __init__(self):
@@ -61,3 +62,25 @@ class Database:
 		etablissements.sort(key=lambda x:x.nbinfractions)
 		return etablissements
 		
+	def insert_plainte(self, plainte):
+		connection = self.get_connection()
+		connection.execute("insert or ignore into plainte(id, etablissement, adresse, ville, date_visite, prenom, nom, description) "
+						"values(?, ?, ?, ?, ?, ?, ?, ?)",
+						(plainte.id, plainte.etablissement, plainte.adresse, plainte.ville, plainte.date_visite, plainte.prenom, plainte.nom, plainte.description))
+		connection.commit()
+		return plainte
+
+	def delete_plainte(self, plainte):
+		connection = self.get_connection()
+		connection.execute("delete from plainte where id = ?", (plainte.id,))
+		connection.commit()
+		
+	def get_plainte(self, id):
+		cursor = self.get_connection().cursor()
+		cursor.execute("select * from plainte where id = ?", (id,))
+		plainte = cursor.fetchall()
+		if len(plainte) == 0:
+			return None
+		else:
+			plainte = plainte[0]
+			return Plainte(plainte[0], plainte[1], plainte[2], plainte[3], plainte[4], plainte[5], plainte[6], plainte[7])

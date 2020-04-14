@@ -14,3 +14,7 @@ DEPENDENCIES:
 pip install flask 
 
 pip install sqlite3
+
+pip install Flask-APScheduler
+
+pip install flask-json-schema

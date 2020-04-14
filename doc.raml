@@ -65,6 +65,34 @@ types:
         type: Infractions
         required: false
 
+  Plainte:
+    type: object
+    properties:
+      id:
+        type: integer
+        required: true
+      etablissement:
+        type: string
+        required: true
+      adresse:
+        type: string
+        required: true
+      ville:
+        type: string
+        required: true
+      date_visite:
+        type: string
+        required: true
+      prenom:
+        type: string
+        required: true
+      nom:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+
 /api:
   /contrevenant:
     get:
@@ -90,3 +118,22 @@ types:
               type: Etablissement[]
         400:
           description: Invalid or no Content-Type specified
+  /plainte:
+    post:
+      description: Creation d'une plainte
+      responses:
+        201:
+          body:
+            application/json:
+              type: Plainte[]
+        500:
+          description: JSON Schema validation failed
+    /{id}:
+      delete:
+        description: Supression d'une plainte par id
+        responses:
+          200:
+            description: Successfully deleted id
+          400:
+            description: Wrong ID
+    

@@ -4,11 +4,14 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from extraction_donnees import extract_data
 from flask_json_schema import JsonSchema
 from flask_json_schema import JsonValidationError
+from schemas import plainte_insert_schema
 import json
 import datetime as dt
 import converter as conv
+from plainte import Plainte
 
-app = Flask(__name__)
+app = Flask(__name__,static_url_path="", static_folder="static")
+schema = JsonSchema(app)
 sched = BackgroundScheduler()
 sched.start()
 sched.add_job(extract_data,'cron',hour=00,minute=1)
@@ -35,6 +38,10 @@ def search():
 	value = request.args.get('search')
 	results = get_db().get_data(attribute, value)
 	return render_template("search_result.html", items=results)
+	
+@app.route('/plainte')
+def plainte():
+	return render_template("plainte.html")
 
 @app.route('/api')
 def api_page():
@@ -81,6 +88,24 @@ def get_etablissement():
 	else:
 		return "Invalid Content-Type", 400
 
+@app.route('/api/plainte',methods=["POST"])
+@schema.validate(plainte_insert_schema)
+def insert_plainte():
+	data = request.get_json()
+	plainte=Plainte(data["id"],data["etablissement"],data["adresse"],data["ville"],data["date_visite"],data["prenom"],data["nom"],data["description"])
+	plainte=get_db().insert_plainte(plainte)
+	return jsonify(plainte.__dict__), 201
+	
+@app.route('/api/plainte/<id>', methods=["DELETE"])
+def delete_plainte(id):
+    plainte = get_db().get_plainte(id)
+    if plainte is None:
+        return "Invalid ID", 400
+    else:
+        get_db().delete_plainte(plainte)
+        return "Plainte N:"+id+" was deleted", 200
+
+		
 if __name__ == '__main__':
 	app.run(debug=True)
 

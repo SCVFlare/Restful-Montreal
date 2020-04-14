@@ -1,0 +1,33 @@
+{% extends "skeleton.html" %}
+{% block content %}  
+<script src="/formulaire_plainte.js"></script>
+<div class="card mb-4">
+		<label>Plainte ID</label><br>
+		<input type="number" name="id" id="id" class="form-control">
+		<hr>
+		<label>Prénom:</label><br>
+		<input type="text" name="prenom" id="prenom" length="5" class="form-control">
+		<label>Nom:</label><br>
+		<input type="text" name="nom" id="nom" length="5" class="form-control">
+		<hr>
+		<label>Nom d'etablissement:</label><br>
+		<input type="text" name="etablissement" id="etablissement" length="10" class="form-control">
+		<hr>
+		<label>Adresse:</label><br>
+		<input type="text"  name="adresse" id="adresse" length="10" class="form-control">
+		<hr>
+		<label>Ville:</label><br>
+		<input type="text"  name="ville" id= "ville" length="10" class="form-control">
+		<hr>
+		<label>Date de visite:</label><br>
+		<input type="date"  name="date_visite" id="date_visite">		
+		<hr>
+		<label>Description de visite:</label><br>
+		<textarea type="text" name="description" id="description" length="10"  rows="6" class="form-control"></textarea>
+		<hr>
+		<span class="input-group-btn">
+			<button class="btn btn-secondary" type="submit" onclick="formulaireJSON()" >Create</button>
+		</span>	
+		<p id="error"></p>
+</div>
+{% endblock %}  

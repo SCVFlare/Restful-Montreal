@@ -1,0 +1,15 @@
+{% extends "skeleton.html" %}
+{% block content %}  
+<div>
+<script src="/noms.js"></script>
+<label for="nom">Choissez un etablissement:</label>
+ <select palceholder="Nom d'etablissement .." id="nom" name="nom" onchange="onChange();">
+	{%for n in noms%}
+        <option value="{{n[0]}}">{{n[0]}}</option>
+	{%endfor%}
+ </select>
+ <div id= "results" class="card mb-4">
+          	
+    </div>
+ </div>
+{% endblock %}  

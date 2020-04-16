@@ -9,6 +9,7 @@ import json
 import datetime as dt
 import converter as conv
 from plainte import Plainte
+from datetime import date
 
 app = Flask(__name__,static_url_path="", static_folder="static")
 schema = JsonSchema(app)
@@ -39,6 +40,21 @@ def search():
 	results = get_db().get_data(attribute, value)
 	return render_template("search_result.html", items=results)
 	
+@app.route('/dates')
+def dates():
+	return render_template("dates.html")
+	
+@app.route('/noms')
+def noms():
+	noms=get_db().get_noms()
+	return render_template("noms.html",noms=noms)
+	
+@app.route('/api/infraction/<etablissement>')
+def get_infractions(etablissement):
+	results=get_db().get_infractions(etablissement)
+	print(results)
+	return jsonify(results)
+
 @app.route('/plainte')
 def plainte():
 	return render_template("plainte.html")

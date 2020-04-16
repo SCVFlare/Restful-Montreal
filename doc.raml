@@ -136,4 +136,12 @@ types:
             description: Successfully deleted id
           400:
             description: Wrong ID
+  /infraction/{etablissement}:
+    get:
+      description: Liste d'infractions pour un etablissement
+      responses:
+        200:
+          body:
+            application/json:
+              type: Infraction[]
     

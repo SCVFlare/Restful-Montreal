@@ -1,0 +1,14 @@
+{% extends "skeleton.html" %}
+{% block content %}  
+<div>
+		<script src="/dates.js"></script>
+		<div class="card mb-4">
+		<label>DU:</label>
+		<input type="date" name="du" id="du" onchange="onChange();" class="form-control">
+		<label>AU:</label>
+		<input type="date" name="au" id="au" onchange="onChange();"class="form-control">
+		<p id="error"></p>
+		<table class="table" id="table">
+		</table>
+</div>
+{% endblock %}  

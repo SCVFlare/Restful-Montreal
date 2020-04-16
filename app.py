@@ -59,10 +59,6 @@ def get_infractions(etablissement):
 def plainte():
 	return render_template("plainte.html")
 
-@app.route('/api')
-def api_page():
-	return render_template("api.html")
-
 @app.route('/api/doc')
 def get_api_doc():
 	return render_template("doc.html")

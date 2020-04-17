@@ -22,18 +22,18 @@ function onChange() {
 		  document.getElementById("error").innerHTML="Invalid date!"
 	  }
 	  else{
-		document.getElementById("table").innerHTML="";
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = 'json';
         xhr.onreadystatechange = function() {
           if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
+			  document.getElementById("table").innerHTML="";
 			  var response = xhr.response;
 			  var results=new Set();
 			  for (var j =0; j<response.length; j++){
 				  results.add(response[j]["etablissement"])
 			  }
-			  var t="<tr><td>ETABLISSEMENT</td><td>NB PLAINTES</td></tr>";
+			  let t="<tr><td>ETABLISSEMENT</td><td>NB PLAINTES</td></tr>";
 			  results.forEach(e => {
                 var tr = "<tr>";
                 tr += "<td>"+e+"</td>";
@@ -41,7 +41,9 @@ function onChange() {
                 tr += "</tr>";
                 t += tr;
               });
+			  results.clear();
 			  document.getElementById("table").innerHTML += t;
+			  t="";
             } else {
               console.log('Erreur avec le serveur');
             }

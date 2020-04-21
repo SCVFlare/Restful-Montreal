@@ -8,19 +8,18 @@
 
         <h1 class="my-4">Systeme de Contrevenants Montreal</h1>
 
-
-
       </div>
 
-      <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
 
-        <!-- Search Widget -->
-        <form action="/search" method="get">
+        
         <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
-            <label for="option">Choisissez un option:</label>
+           
+            <div class="input-group">
+			<form action="/search" method="get">
+				 <label for="select">Choisissez un option:</label>
 
           <select id="select" name="select">
           <option value="etablissement">Nom d'etablissement</option>
@@ -29,12 +28,6 @@
           </select> 
           <br>
           <br>
-
-
-
-
-            <div class="input-group">
-			
               <input type="text" class="form-control" placeholder="Search for..." name="search">
               <span class="input-group-btn">
                 <button class="btn btn-secondary" type="submit" >Go!</button>
@@ -49,10 +42,8 @@
       </div>
 
     </div>
-    <!-- /.row -->
 
   </div>
-  <!-- /.container -->
 
 
 

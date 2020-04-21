@@ -1,30 +1,28 @@
 {% extends "skeleton.html" %}
 {% block content %}  
-		<ul>
         	{% for item in items %}
-        	<!-- Blog Post -->
         	<div class="card mb-4">
           	<div class="card-body">
-					<h3>PROPRIETAIRE:<h3>
+					<h3>PROPRIETAIRE:</h3>
 				    <p>{{item.proprietaire}}</p>
-					<h3>CATEGORIE:<h3>
+					<h3>CATEGORIE:</h3>
 				    <p>{{item.categorie}}</p>
-					<h3>ETABLISSEMENT:<h3>
+					<h3>ETABLISSEMENT:</h3>
 				    <p>{{item.etablissement}}</p>
-					<h3>ADRESSE:<h3>
+					<h3>ADRESSE:</h3>
 				    <p>{{item.adresse}}</p>
-					<h3>VILLE:<h3>
+					<h3>VILLE:</h3>
 				    <p>{{item.ville}}</p>
-					<h3>DECRIPTION:<h3>
+					<h3>DECRIPTION:</h3>
 				    <p>{{item.description}}</p>
-					<h3>DATE D'INFRACTION:<h3>
+					<h3>DATE D'INFRACTION:</h3>
 				    <p>{{item.date_infraction}}</p>
-					<h3>DATE DE JUGEMENT:<h3>
+					<h3>DATE DE JUGEMENT:</h3>
 				    <p>{{item.date_jugement}}</p>
-					<h3>MONTANT:<h3>
+					<h3>MONTANT:</h3>
 				    <p>{{item.montant}}</p>
           	</div>
         	</div>
         	{% endfor %}
-        </ul>
+
 {% endblock %}  
